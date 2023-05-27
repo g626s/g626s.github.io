@@ -7439,3 +7439,7 @@ Usage: codyhouse.co/license
   display: inline-block;
   display: inline-flex;
 }
+
+.list-inline-item:not(:last-child) {
+  margin-right: 8.05rem;
+}
