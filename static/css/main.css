@@ -1323,7 +1323,7 @@
     border-radius: 0.1875rem;
     padding: 11px 22px;
     cursor: pointer;
-    background-color: #888;
+    background-color: rgb(176, 31, 31);
     color: #FFFFFF;
   }
   
@@ -1417,7 +1417,7 @@
   
   .btn.btn-link,
   .navbar .navbar-nav > a.btn.btn-link {
-    color: #888;
+    color: rgb(176, 31, 31);
   }
   
   .btn.btn-link:hover, .btn.btn-link:focus, .btn.btn-link:active,
@@ -7099,8 +7099,8 @@
     content: "";
     border: 15px solid rgba(139, 0, 0, 0.6);
     border-radius: 50%;
-    height: 180px;
-    width: 180px;
+    height: 220px;
+    width: 220px;
     position: absolute;
     left: 0;
     -webkit-animation: pulsate 1.6s ease-out;
@@ -7114,8 +7114,8 @@
   .cc-profile-image img {
     position: relative;
     border-radius: 50%;
-    height: 180px;
-    width: 180px;
+    height: 220px;
+    width: 220px;
     padding: 0;
     margin: 0;
     border: 15px solid transparent;
