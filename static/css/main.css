@@ -7441,5 +7441,11 @@ Usage: codyhouse.co/license
 }
 
 .list-inline-item:not(:last-child) {
-  margin-right: 11rem;
+  margin-right: 8rem;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+  text-align: center;
 }
