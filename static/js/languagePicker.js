@@ -1,3 +1,37 @@
+// utility functions
+if(!Util) function Util () {};
+
+Util.addClass = function(el, className) {
+  var classList = className.split(' ');
+  el.classList.add(classList[0]);
+  if (classList.length > 1) Util.addClass(el, classList.slice(1).join(' '));
+};
+
+Util.removeClass = function(el, className) {
+  var classList = className.split(' ');
+  el.classList.remove(classList[0]);
+  if (classList.length > 1) Util.removeClass(el, classList.slice(1).join(' '));
+};
+
+Util.toggleClass = function(el, className, bool) {
+  if(bool) Util.addClass(el, className);
+  else Util.removeClass(el, className);
+};
+
+Util.moveFocus = function (element) {
+  if( !element ) element = document.getElementsByTagName('body')[0];
+  element.focus();
+  if (document.activeElement !== element) {
+    element.setAttribute('tabindex','-1');
+    element.focus();
+  }
+};
+
+Util.getIndexInArray = function(array, el) {
+  return Array.prototype.indexOf.call(array, el);
+};
+
+
 // File#: _1_language-picker
 // Usage: codyhouse.co/license
 (function() {
@@ -32,10 +66,10 @@
 	function initLanguagePickerEvents(picker) {
 		// make sure to add the icon class to the arrow dropdown inside the button element
 		var svgs = picker.trigger.getElementsByTagName('svg');
-		svgs[0].classList.add('icon');
-		svgs[1].classList.add('icon');
+		Util.addClass(svgs[0], 'li4-icon');
+		Util.addClass(svgs[1], 'li4-icon');
 		// language selection in dropdown
-		// ⚠️ Important: you need to modify this function in production
+		// ⚠️ Important: you need to modify this function in production
 		initLanguageSelection(picker);
 
 		// click events
@@ -73,8 +107,8 @@
 
 	function placeDropdown(picker) {
 		var triggerBoundingRect = picker.trigger.getBoundingClientRect();
-		picker.dropdown.classList.toggle('language-picker__dropdown--right', (window.innerWidth < triggerBoundingRect.left + picker.dropdown.offsetWidth));
-		picker.dropdown.classList.toggle('language-picker__dropdown--up', (window.innerHeight < triggerBoundingRect.bottom + picker.dropdown.offsetHeight));
+		Util.toggleClass(picker.dropdown, 'language-picker__dropdown--right', (window.innerWidth < triggerBoundingRect.left + picker.dropdown.offsetWidth));
+		Util.toggleClass(picker.dropdown, 'language-picker__dropdown--up', (window.innerHeight < triggerBoundingRect.bottom + picker.dropdown.offsetHeight));
 	};
 
 	function checkLanguagePickerClick(picker, target) { // if user clicks outside the language picker -> close it
@@ -98,7 +132,7 @@
 
 	function initListPicker(picker) { // create language picker dropdown
 		var list = '<div class="language-picker__dropdown" aria-describedby="'+picker.pickerId+'-description" id="'+picker.pickerId+'-dropdown">';
-		list = list + '<p class="sr-only" id="'+picker.pickerId+'-description">'+picker.element.getElementsByTagName('label')[0].textContent+'</p>';
+		list = list + '<p class="li4-sr-only" id="'+picker.pickerId+'-description">'+picker.element.getElementsByTagName('label')[0].textContent+'</p>';
 		list = list + '<ul class="language-picker__list" role="listbox">';
 		for(var i = 0; i < picker.options.length; i++) {
 			var selected = picker.options[i].selected ? ' aria-selected="true"' : '',
@@ -119,9 +153,9 @@
 	};
 
 	function getLanguageUrl(option) {
-		// ⚠️ Important: You should replace this return value with the real link to your website in the selected language
+		// ⚠️ Important: You should replace this return value with the real link to your website in the selected language
 		// option.value gives you the value of the language that you can use to create your real url (e.g, 'english' or 'italiano')
-		return '#';
+		return 'https://g626s.github.io/';
 	};
 
 	function initLanguageSelection(picker) {
@@ -133,33 +167,16 @@
 				// selecting the same language
 				event.preventDefault();
 				picker.trigger.setAttribute('aria-expanded', 'false'); // hide dropdown
-			} else { 
-				// ⚠️ Important: this 'else' code needs to be removed in production. 
-				// The user has to be redirected to the new url -> nothing to do here
-				event.preventDefault();
-				picker.element.getElementsByClassName('language-picker__list')[0].querySelector('[aria-selected="true"]').removeAttribute('aria-selected');
-				language.setAttribute('aria-selected', 'true');
-				picker.trigger.getElementsByClassName('language-picker__label')[0].setAttribute('class', 'language-picker__label language-picker__flag language-picker__flag--'+language.getAttribute('data-value'));
-				picker.trigger.getElementsByClassName('language-picker__label')[0].getElementsByTagName('em')[0].textContent = language.textContent;
-				picker.trigger.setAttribute('aria-expanded', 'false');
-			}
+			} 
 		});
 	};
 
 	function keyboardNavigatePicker(picker, direction) {
-		var index = Array.prototype.indexOf.call(picker.languages, document.activeElement);
+		var index = Util.getIndexInArray(picker.languages, document.activeElement);
 		index = (direction == 'next') ? index + 1 : index - 1;
 		if(index < 0) index = picker.languages.length - 1;
 		if(index >= picker.languages.length) index = 0;
-		elMoveFocus(picker.languages[index]);
-	};
-
-	function elMoveFocus(element) {
-		element.focus();
-		if (document.activeElement !== element) {
-			element.setAttribute('tabindex','-1');
-			element.focus();
-		}
+		Util.moveFocus(picker.languages[index]);
 	};
 
 	//initialize the LanguagePicker objects
