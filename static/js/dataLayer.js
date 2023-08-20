@@ -1,5 +1,5 @@
 // datalayer.js
-window.dataLayer = window.dataLayer || []; // Check if dataLayer already exists, otherwise initialize it as an empty array
+dataLayer = window.dataLayer = window.dataLayer || []; // Check if dataLayer already exists, otherwise initialize it as an empty array
 dataLayer.push({ // Push relevant data to the dataLayer
     'event': 'dataLayer-initialized', // Custom event indicating dataLayer initialization
     'content_language': '<content_language>', // Language of the content
